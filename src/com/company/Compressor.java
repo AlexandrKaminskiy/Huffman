@@ -22,7 +22,7 @@ public class Compressor {
     private static final int OFFSET_SIZE_IN_BYTES = 1;
     private static final int PREFIX_STRING_SIZE_IN_BYTES = 4;
 
-    public void compress(String path) throws IOException {
+    public void compress(String path, String outputPath) throws IOException {
 
         byte[] bytes = Files.readAllBytes(Path.of(path));
         if (bytes.length == 0) {
@@ -92,17 +92,17 @@ public class Compressor {
         }
         outputBuffer.flip();
 
-        Path filePath = Path.of("compressed_" + path);
+        Path filePath = Path.of(outputPath);
 
         FileChannel fileChannel = FileChannel.open(filePath,
-            StandardOpenOption.CREATE,  // Create the file if it doesn't exist
+            StandardOpenOption.CREATE,
             StandardOpenOption.WRITE
         );
         fileChannel.write(outputBuffer);
         fileChannel.close();
     }
 
-    public void decompress(String path) throws IOException {
+    public void decompress(String path, String outputPath) throws IOException {
         byte[] bytes = Files.readAllBytes(Path.of(path));
         ByteBuffer inputBuffer = ByteBuffer.wrap(bytes);
         int prefixStringSize = inputBuffer.getInt();
@@ -144,7 +144,7 @@ public class Compressor {
         }
         ByteBuffer buffer = ByteBuffer.wrap(byteArray);
 
-        Path filePath = Path.of("decompressed_" + path);
+        Path filePath = Path.of(outputPath);
 
         FileChannel fileChannel = FileChannel.open(filePath,
             StandardOpenOption.CREATE,

@@ -5,8 +5,13 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         Compressor compressor = new Compressor();
-        compressor.compress("test.txt");
-        compressor.decompress("compressed_test.txt");
+        if (args.length == 0) {
+            System.out.println();
+        }
+        switch (args[0]) {
+            case "compress" -> compressor.compress(args[1], args[2]);
+            case "decompress" -> compressor.decompress(args[1], args[2]);
+        }
     }
 }
 
