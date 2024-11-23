@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PriorityQueue {
+
     List<QueueElement> queue = new ArrayList<>();
 
     public void push(QueueElement element) {
