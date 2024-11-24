@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-public class Node implements Priorityable {
+public class Node {
     Node left;
     Node right;
     private int priority;
@@ -69,7 +69,6 @@ public class Node implements Priorityable {
         this.symbol = symbol;
     }
 
-    @Override
     public int getPriority() {
         if (priority != 0) {
             return priority;
