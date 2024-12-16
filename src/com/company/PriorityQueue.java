@@ -29,14 +29,14 @@ public class PriorityQueue {
         if (queue.isEmpty()) {
             return null;
         }
-        return queue.remove(0);
+        return queue.removeFirst();
     }
 
     public QueueElement poll() {
         if (queue.isEmpty()) {
             return null;
         }
-        return queue.get(0);
+        return queue.getFirst();
     }
 
     public int size() {

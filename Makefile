@@ -7,11 +7,11 @@ $(JAR):
 
 compress:
 	@echo "Сжатие файла..."
-	time java -jar $(JAR) compress $(word 2, $(MAKECMDGOALS)) $(word 3, $(MAKECMDGOALS))
+	java -jar $(JAR) compress $(word 2, $(MAKECMDGOALS)) $(word 3, $(MAKECMDGOALS))
 
 decompress:
 	@echo "Распаковка файла..."
-	time java -jar $(JAR) decompress $(word 2, $(MAKECMDGOALS)) $(word 3, $(MAKECMDGOALS))
+	java -jar $(JAR) decompress $(word 2, $(MAKECMDGOALS)) $(word 3, $(MAKECMDGOALS))
 
 clean:
 	@echo "Очистка временных файлов..."

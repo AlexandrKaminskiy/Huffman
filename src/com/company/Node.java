@@ -2,7 +2,6 @@ package com.company;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -13,7 +12,7 @@ public class Node {
     private int priority;
     Byte symbol;
 
-    private static final List<Byte> ROOT = Arrays.asList(
+    private static final List<Byte> ROOT = List.of(
         Byte.MIN_VALUE,
         (byte) (Byte.MIN_VALUE + 1),
         (byte) (Byte.MIN_VALUE + 2)
@@ -24,7 +23,8 @@ public class Node {
 
         for (int i = 0; i < prefixStringSize; i++) {
             int position = buffer.position();
-            if (buffer.get(position) == ROOT.get(0) && checkForRoot(buffer, position)) {
+            if (buffer.get(position) == ROOT.getFirst() && checkForRoot(buffer, position)) {
+                buffer.position(buffer.position() + ROOT.size());
                 i += (ROOT.size() - 1);
                 Node root = new Node(null, null);
                 if (prefixRecord.size() == 1) {
@@ -49,13 +49,14 @@ public class Node {
     }
 
     private boolean checkForRoot(ByteBuffer buffer, int position) {
-        if (buffer.capacity() - position < ROOT.size()) {
+        ByteBuffer fromPosition = buffer.slice(position, buffer.capacity() - position);
+        if (fromPosition.capacity() < ROOT.size()) {
             return false;
         }
 
-        return buffer.get() == ROOT.get(0)
-            && buffer.get() == ROOT.get(1)
-            && buffer.get() == ROOT.get(2);
+        return fromPosition.get() == ROOT.getFirst()
+            && fromPosition.get() == ROOT.get(1)
+            && fromPosition.get() == ROOT.get(2);
     }
 
     public Node(Node left, Node right) {
